@@ -1,0 +1,32 @@
+Q1. Django Channels
+
+2. Project ka naya structure (Channels ke saath)
+Aapka project folders mein ye changes aayenge:
+
+consumers.py (New): Yeh views.py ki jagah lega. Jab models.py database ka kaam karega, consumers.py WebSocket connection (real-time audio) ko handle karega.
+
+routing.py (New): Ye batayega ki kaunsa WebSocket connection kis "consumer" (function) ke paas jayega.
+
+asgi.py (Instead of wsgi.py): Audio streaming ke liye asgi.py ka use hota hai, jo asynchronous (non-blocking) requests handle karta hai.
+
+3. Workflow ka flow (Aapke project ke liye)
+Frontend (Web/Mobile): MediaRecorder API ka use karke microphone ka data capture karega.
+
+WebSocket (Django Channels): Yeh data consumers.py ke paas jayega.
+
+Processing Loop (consumers.py mein):
+
+Faster-Whisper (text nikalne ke liye).
+
+Translator (Hindi -> English).
+
+ElevenLabs/TTS (Text -> Audio).
+
+Send Back: Wahi consumer wapis us translated audio ko dusre user ke browser par WebSocket ke zariye bhej dega.
+
+Aapko kya seekhna hoga (Next Steps):
+Django Channels: Django mein WebSockets kaise configure karte hain.
+
+Asynchronous Programming (async/await): Kyuki Python 3.14 use kar rahe hain, aapko async functions likhne honge taaki translation ki wajah se call ruk na jaye.
+
+Redis: Django Channels ke liye backend mein Redis install karna padega (ye message broker ka kaam karta hai).
